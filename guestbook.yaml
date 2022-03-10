@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: guestbook-web
-        image: ibmcom/guestbook
+        image: httpd
         ports:
         - containerPort: 8080
 ---
