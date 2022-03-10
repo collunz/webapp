@@ -40,7 +40,8 @@ metadata:
     name: guestbook-ingress
 spec:
     rules:
-    - http:
+    - host: jwi.dk  
+      http:
         paths:
         - path: /
           pathType: Prefix
