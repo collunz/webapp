@@ -17,7 +17,7 @@ spec:
       - name: guestbook-web
         image: httpd
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -27,9 +27,9 @@ metadata:
     name: guestbook-service
 spec:
     ports:
-    - port: 8080
+    - port: 80
       protocol: TCP
-      targetPort: 8080
+      targetPort: 80
     selector:
         app: guestbook
     type: ClusterIP
@@ -52,4 +52,4 @@ spec:
             service:
               name: guestbook-service
               port:
-                number: 8080                 
+                number: 80 
