@@ -1,10 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-deployment
   labels:
     app: guestbook
+  name: guestbook-deploy
+  namespace: test
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: guestbook
@@ -14,42 +16,42 @@ spec:
         app: guestbook
     spec:
       containers:
-      - name: guestbook-web
-        image: httpd
-        ports:
-        - containerPort: 80
+      - image: vitess/guestbook
+        imagePullPolicy: Always
+        name: guestbook
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    labels:
-        app: guestbook
-    name: guestbook-service
+  labels:
+    app: guestbook
+  name: guestbook-svc
+  namespace: test
 spec:
-    ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 80
-    selector:
-        app: guestbook
-    type: ClusterIP
+  ports:
+  - name: 80-80
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: guestbook
+  type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: guestbook-ingress
-    annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /
+  name: guestbook-ing
+  namespace: test
 spec:
-    ingressClassName: nginx
-    rules:
-    - host: jwi.dk  
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: guestbook-service
-              port:
-                number: 80 
+  ingressClassName: public
+  rules:
+  - host: jwi2.dk
+    http:
+      paths:
+      - backend:
+          service:
+            name: guestbook-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
