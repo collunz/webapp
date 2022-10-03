@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: guestbook
-  name: guestbook-deploy
+  name: guestbook
   namespace: test
 spec:
   replicas: 1
@@ -25,7 +25,7 @@ kind: Service
 metadata:
   labels:
     app: guestbook
-  name: guestbook-svc
+  name: guestbook
   namespace: test
 spec:
   ports:
@@ -50,7 +50,7 @@ spec:
       paths:
       - backend:
           service:
-            name: guestbook-svc
+            name: guestbook
             port:
               number: 80
         path: /
