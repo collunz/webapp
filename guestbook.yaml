@@ -16,7 +16,7 @@ spec:
         app: guestbook
     spec:
       containers:
-      - image: vitess/guestbook
+      - image: httpd
         imagePullPolicy: Always
         name: guestbook
 ---
